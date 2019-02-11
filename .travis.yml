@@ -1,5 +1,4 @@
 language: scala
-
 sudo: required
 cache: packages
 
@@ -8,13 +7,15 @@ scala:
 
 env:
   global:
-    - SPARK="2.4.0"
-    - HADOOP="2.7"
-    - SPARK_HOME="/tmp/spark-${SPARK}-bin-hadoop${HADOOP}"
-    - spark-submit="${SPARK_HOME}/bin/spark-submit"
+    - SPARK_VERSION="2.4.0"
+    - HADOOP_VERSION="2.7"
+    - SPARK_PATH="spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}"
+    - SPARK_HOME="/tmp/${SPARK_PATH}"    
+    - JAVA_VERSION=oraclejdk8
+    - PATH="${PATH}:${SPARK_HOME}/bin"
 
 before_install:
-  - ./setup_spark.sh
+  - bash ./setup_spark.sh
 
 script:
-  - ${spark-submit} -h
+  - spark-submit -h
